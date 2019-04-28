@@ -5,7 +5,7 @@
 	if (!$con) {
     	die('No pudo conectarse: ' . mysqli_error());
 	}
-		$busqueda = $_POST["busqueda"];
+		$busqueda = $_REQUEST["busqueda"];
 		//$busqueda = '1';
 		echo $busqueda;
 		
@@ -31,20 +31,19 @@
 		}
 		else
 		{
-			if($cantidad>1) echo "1&"; 
+			if($cantidad>=1) echo "1&"; 
 			else echo "0&";
 	
 			$cantidad=1;
 			$query = "SELECT numero,num_animalito,animalito FROM ruleta_activa where num_animalito LIKE '".$busqueda."%'  LIMIT 0, 40";
 			//$query = "select NRO_PAT,RAZON_SOCIAL from establecimientos where NRO_PAT LIKE '".$busqueda."%'  LIMIT 0, 100";
+			//echo $query;
 			$result = mysqli_query($con,$query);
 
 			while($row = mysqli_fetch_array($result)) {
 				//cantidad = rs.getInt("CANT");
 				$num_animalito = $row['num_animalito'];
-				$animalito = $row['animalito'];
-
-		
+				$animalito = $row['animalito'];		
 				
 				//String rso =rs.getString("RAZON_SOCIAL");
 				

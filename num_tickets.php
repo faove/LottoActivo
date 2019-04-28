@@ -1,8 +1,9 @@
 <?php
+
 //-----------------------------------------------------
 //Funcion que se encarga de sumar el numero de tickets
 //-----------------------------------------------------
-
+$num = Array();
 //if (!is_null($nuevo)){
 
 
@@ -10,8 +11,8 @@
 	//----------------------------------------------------------------------------------
 	//Buscar en nuevo_serial si serial 
 	//----------------------------------------------------------------------------------
-
-	$strquery_ns = "SELECT serial,agencia,fecha,id FROM nuevo_serial where id='1'";
+	//$_SESSION['count']=1;
+	$strquery_ns = "SELECT serial,agencia,fecha,id FROM nuevo_serial where id=1";
 
 	//echo $strquery_ns;
 
@@ -29,26 +30,41 @@
 	while($row_ns = mysqli_fetch_array($result_ns)) {  
 		
 		$serial = $row_ns['serial'];
-		$nuevoserial = $serial+1;		
+		
+		//echo "  flag serial  ".$flagserial;
+
+		$nuevoserial = $serial+1;
+		
+		
+		
 		
 	}
-			
-			
-	$update_ns = "UPDATE nuevo_serial SET serial=".$nuevoserial." WHERE id=1"; 
-	//echo "\t\n";
-	//echo "" .$update_ns."\n";
-	//echo "\t\n";
-	//echo $insert_jug;
+	
 
-				   
-		if (mysqli_query($con, $update_ns)) {
-				
-			//echo "Planilla actualizada";
-
-		} else {
+		$nuevoticket=date(ims)+$nuevoserial;
 		
-			echo "<p><font color=#000080 size=2 face=Arial Narrow>Los datos han sido guardados</font></p>";
-		}
+		//echo "Se esta generando:".$nuevoticket;
+		//echo"<p></p>";
+	//}	
+			//$nuevoticket = range();
+					
+			//$update_ns = "UPDATE nuevo_serial SET serial=".$nuevoserial.",Ticket='".$nuevoticket."' WHERE id=1"; 
+			$update_ns = "UPDATE nuevo_serial SET serial=".$nuevoserial." WHERE id=1"; 
+			//echo "\t\n";
+			//echo "" .$update_ns."\n";
+			//echo "\t\n";
+			//echo $insert_jug;
+
+						   
+			if (mysqli_query($con, $update_ns)) {
+					
+				//echo "Planilla actualizada";
+
+			} else {
+			
+				echo "<p><font color=#000080 size=2 face=Arial Narrow>tabla nuevo_serial no ha sido actualizada</font></p>";
+			}
+			//}
 
 //}		
 

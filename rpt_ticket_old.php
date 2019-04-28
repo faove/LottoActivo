@@ -184,9 +184,9 @@ function Footer()
 	//}
 
 	//$historial = $con->conectar();
-		//Serial,Fecha,Sorteo,Animalito,Nom_animalito,Monto,Total  and ID_OBJ='PIC' ORDER BY CUOTA
+		//Serial,Fecha,Sorteo,Animalito,Num_animalito,Monto,Total  and ID_OBJ='PIC' ORDER BY CUOTA
 		
-	$query = "select Serial,Fecha,Sorteo,Animalito,Nom_animalito,Monto,Total from jugadas"; 
+	$query = "select Serial,Fecha,Sorteo,Animalito,Num_animalito,Monto,Total from jugadas"; 
                 //"from jugadas WHERE Serial = '".$nuevoserial."'"; 
     
     //$pdf->SetFont('Arial','',6);    
@@ -214,7 +214,7 @@ function Footer()
 		{
 			$fila = mysql_fetch_array($historial);*/
 			$pdf->SetFont('Arial','',10);
-			$pdf->Cell(10,8,' '.$row['Nom_animalito'].' '.$row['Animalito'],0,0);
+			$pdf->Cell(10,8,' '.$row['Num_animalito'].' '.$row['Animalito'],0,0);
 			$pdf->Ln(5);
 			/*if($i%2 == 1)
 			{
@@ -222,13 +222,13 @@ function Footer()
 				//$pdf->SetFillColor(15,255,153);
     			//$pdf->SetTextColor(0);
     			
-				//$pdf->Row(array($row['Serial'], $row['Fecha'], $row['Sorteo'], $row['Animalito'],$row['Nom_animalito'], $row['Monto']));
+				//$pdf->Row(array($row['Serial'], $row['Fecha'], $row['Sorteo'], $row['Animalito'],$row['Num_animalito'], $row['Monto']));
 			}
 			else
 			{
 				//$pdf->SetFillColor(10,204,51);
     			//$pdf->SetTextColor(0);
-				//$pdf->Row(array($row['Serial'], $row['Fecha'], $row['Sorteo'], $row['Animalito'],$row['Nom_animalito'], $row['Monto']));
+				//$pdf->Row(array($row['Serial'], $row['Fecha'], $row['Sorteo'], $row['Animalito'],$row['Num_animalito'], $row['Monto']));
 			
 			}*/
 			

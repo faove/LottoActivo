@@ -2,7 +2,7 @@
 <?php
 //header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 //header("Cache-Control: post-check=0, pre-check=0", false);
-//header("Pragma: no-cache");
+//header("Pragma: no-cache"); shuffle
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xml:lang="en">
 	<head>
@@ -18,7 +18,7 @@
 		
 		<script src="js/bootstrap.min.js"></script>
 		
-		<script src="js/functions.js"></script>
+		<!--<script src="js/functions.js"></script>-->
 		
 		<script src="js/sweetalert.min.js"></script>		
 		
@@ -29,6 +29,8 @@
 		<link href="css/sweetalert.css" rel="stylesheet">
 		
 		<script type="text/javascript">
+			
+			
 		function validateForm() {
 			//var e = document.getElementById("loteria");
 			//alert (e);
@@ -77,22 +79,111 @@
             return false;
         }  
 		</script>
-
 		<script type="text/javascript">
+		function Verificarf5()
+		{
+		var tecla=window.event.keyCode;
+		if (tecla==116) {
+		 confirm('Si recarga la página perdera todos los datos ingresados,<br> ¿Deseas recargar la página?"', function (result) {
+			 if (result) {
+				   location.reload();
+			  } else {
+				   event.keyCode=0;
+		event.returnValue=false;
+			  }
+		}); 
+
+		}
+		}
+		</script>
+		<script type="text/javascript">
+
 			// Solo permite ingresar numeros.
-			function soloNumeros(e){
+			function soloNumeros(e,nextobject){
+			   var tecla = (document.all) ? e.keyCode : e.which;
+
+				//alert (tecla);
+				if (tecla==46 || tecla==0 || tecla==8 || tecla==9){
+					
+					//nextobject.focus();
+					return true;
+				}
+				if(tecla==13){
+					//alert (nextobject);
+					//alert("Suministre un Numero Valido");
+					//nextobject.focus();
+					document.myForm.action="#";
+					document.myForm.submit();					
+					return true;
+				}
+					
+				var patron =/[0-9]/;
+				var tecla_final = String.fromCharCode(tecla);
+				return patron.test(tecla_final);
+			}
+
+			function KeyAscii(e) {
+  				return (document.all) ? e.keyCode : e.which;
+			}
+				
+			function soloNumerostxt(e,nextobject){
+			   var tecla = (document.all) ? e.keyCode : e.which;
+			   nextobject = document.getElementById(nextobject);
+			   if (tecla==46 || tecla==0 || tecla==8 || tecla==9){
+					
+					//nextobject.focus();
+					return true;
+				}
+				if (nextobject) {
+				if (KeyAscii(e) == 13) nextobject.focus();
+				}
+				var patron =/[0-9]/;
+				var tecla_final = String.fromCharCode(tecla);
+				return patron.test(tecla_final);
+				
+			}
+			function numeros(e,nextobject){
 				var key = window.Event ? e.which : e.keyCode
+				//alert (key);
 				if(key == 13)
 				{
 				    //alert(document.getElementById("monto").value);
-				    document.getElementById("sel2").value = document.getElementById("monto").value;
+				    //document.getElementById("sel2").value = document.getElementById("monto").value;
+				    nextobject.focus();
 				}
 				return (key >= 48 && key <= 57)
 			}
 			function asignaVariables(){
-				document.getElementById("monto").focus();	
+				/*
+				var tecla=window.event.keyCode;
+				alert (key);
+				if (tecla==116) {
+				
+				}	*/
+					//document.getElementById("monto").focus();	 myForm
+					//var myForm = document.form1;
+				alert("Gracias por rellenar el formulario ");
+				buscar_txt.focus();
+
 			}
-			
+			function butCheckForm_onclick(nextobject) {
+				var myForm = document.form1;
+				alert("Gracias por rellenar el formulario ");
+				nextobject.focus();
+				//nextobject
+				/* if (myForm.txtAge.value == "" || myForm.txtName.value == "") {
+					alert("Complete todo el formulario, por favor");
+					if (myForm.txtName.value == "") {
+						myForm.txtName.focus();
+					}
+					else {
+						myForm.txtAge.focus();
+					}
+				}
+				else {
+					alert("Gracias por rellenar el formulario " + myForm.txtName.value);
+				} */
+			}
 		</script>
 		<script>
 			function funcion_agregar() {
@@ -121,9 +212,26 @@
 		    // 37 izquierda
 		    // 39 derecha
 		    // 38 subir
-		    // 40 bajar
-		    if(unicode==8 || unicode==46 || unicode==13 || unicode==9 || unicode==37 || unicode==39 || unicode==38 || unicode==40)
+			// 40 bajar
+			
+		    if(unicode==8 || unicode==46 || unicode==13 || unicode==9 || unicode==37 || unicode==39 || unicode==38 || unicode==40){
+		        //alert("Suministre un Numero Valido");
+		     return true;
+			}    
+		   /* if(unicode==13){
+		    	//alert("Suministre un Numero Valido");
+		    	document.forms['myForm'].submit();
 		        return true;
+		    }
+		    	
+
+		    if(unicode==27){
+		    	//alert("Imprimir");
+		    	document.forms['formimprimir'].submit();
+		        return true;
+		    }*/
+		    	
+		    
 	 
 		    // Si ha superado el limite de caracteres devolvemos false
 		    if(contenido.length>=caracteres)
@@ -225,113 +333,133 @@
 			// Empieza la función de refrescar 
 
 			window.onload = function(){ 
-				refreshdiv(); // corremos inmediatamente la funcion 
+				refreshdiv(); // corremos inmediatamente la funcion onLoad="asignaVariables();"
 			} 
 	</script>
 	
 	</head>
-	<body onLoad="asignaVariables();">
+	<body onload='document.buscar_txt.focus()'>
 	<div class="container-fluid">
-	  <h1>Lotto Activo</h1>
-	  <p>Sistema de Gestion de Animalitos!</p>
 	  
 	  <form name="myForm" action="#" onsubmit="return validateForm()" method="post">
 		 
 		<?php
 		
-		$nuevo = $_REQUEST['nuevo'];
-		//echo 'valor nuevo'.$nuevo;
+		//Control de refreshd
+		$varrefresh = $_REQUEST['varrefresh'];
+		$nuevo = $_REQUEST['nuevo'];		
 		$buscar_txt	= $_REQUEST['buscar_txt'];
 		//echo $buscar_txt;
 		$nuevoserial = $_REQUEST['serial'];
+		$newticket = $_REQUEST['newticket'];
+		
+		
+		$nuevoticket = $_REQUEST['nuevoticket'];
 		$varimprimir = $_REQUEST['varimprimir'];
+		$imprimirdirecto = $_REQUEST['imprimirdirecto'];
+		//echo $imprimirdirecto;
 		$fecha = $_REQUEST['fecha'];
 		$animalito = $_REQUEST['input_2'];
 		$animal = $_REQUEST['animal'];
 		$sorteo = $_REQUEST['sorteo'];
+		$loteria_jug = $_REQUEST['loteria_jug'];		
 		$monto = $_REQUEST['monto'];
 		$total 	= $_REQUEST['total'];
-		$insert = $_REQUEST['insert'];
-
-		echo $insert;
+		$insert =(string) $_REQUEST['insert'];
 		
+		$flagserial=true;
+		//echo "Variable \n\n Agregar:".$insert."\n\t";
+		//echo "Variable \n\n Nuevo:".$nuevo."\n\t";
 		//$Agregar = $_REQUEST['Agregar'];
 		//echo $Agregar;
 		$check = $_REQUEST['check'];
 		//$nuevoserial = $_REQUEST['nuevoserial'];
-		echo $nuevoserial;		
+		//echo $nuevoserial;		
 		//$aa = $_REQUEST['Agregar'];
 		//echo $aa;
+		/*echo "Esta variable está definida, así que se imprimirá";
+		}
 
+		if (!is_null($insert)){
+		*/
+		 //echo "text nuevoticket".$nuevoticket;
 		include("conexion.php");
+
+		//if (!isset($imprimirdirecto)) {
+
+
+		//}
 		
-
-		if (!empty($nuevo)){
-			echo "sumooooo unooo";
-			include("num_tickets.php");
-		}
-		//-----------------------------------------------------
-		//Funcion que se encarga de sumar el numero de tickets
-		//-----------------------------------------------------
-
-		//echo 'AQUIIIIII';		
-				
-		//----------------------------------------------------------------------------------
-		//Buscar en nuevo_serial si serial 
-		//----------------------------------------------------------------------------------
-
-		/*--------------------
 		
-		$strquery_ns = "SELECT serial,agencia,fecha,id FROM nuevo_serial where id='1'";
-
-		//echo $strquery_ns;
-
-		$result_ns= mysqli_query($con,$strquery_ns);
-
-
-
-		if (!$result_ns) {
-			$mensaje  = 'Consulta no válida: ' . mysqli_error() . "\n";
-			$mensaje .= 'Consulta completa: ' . $strquery_ns;
-			die($mensaje);
-		}
-
-
-		while($row_ns = mysqli_fetch_array($result_ns)) {  
+		
+		//if (!isset($nuevoserial)) {
 			
-			$serial = $row_ns['serial'];
-			$nuevoserial = $serial+1;		
+			//echo "nuevo serial no tiene valor";
+			//buscar_txt
+
+			//-----------------------------------------------------
+			//Funcion que se encarga de sumar el numero de tickets
+			//-----------------------------------------------------
 			
-		}
+
+		//}	
+		//Esta funcion esta ahora en reporte de impresion
 		
-		//Actualiza el serial	
-		$update_ns = "UPDATE nuevo_serial SET serial=".$nuevoserial." WHERE id=1"; 
-
-		echo $insert;
-
-				   
-		if (mysqli_query($con, $update_ns)) {
+		if (!is_null($insert)){
+			
+    		if(empty($_REQUEST['check'])) {
+				//echo "sumooooo unooo";
 				
-			//echo "Planilla actualizada";
+				$strquery_ns = "SELECT serial,agencia,fecha,id,monto_max FROM nuevo_serial where id='1'";
 
-		} else {
-		
-			echo "<p><font color=#000080 size=2 face=Arial Narrow>Los datos han sido guardados</font></p>";
+				//echo $strquery_ns;
+
+				$result_ns= mysqli_query($con,$strquery_ns);
+
+
+
+				if (!$result_ns) {
+					$mensaje  = 'Consulta no válida: ' . mysqli_error() . "\n";
+					$mensaje .= 'Consulta completa: ' . $strquery_ns;
+					die($mensaje);
+				}
+
+				while($row_ns = mysqli_fetch_array($result_ns)) {  
+			
+					$nuevoserial = $row_ns['serial'];
+					$monto_max = $row_ns['monto_max'];
+					$fecha_serial = $row_ns['fecha'];
+					//$nuevoticket = $row_ns['ticket'];	
+			
+				}
+				//echo $fecha_serial;
+				//Verifico la fecha si es diferente a date inicializa los montos en 0
+				if (strcmp(date('Y-m-d'),$fecha_serial)!=0){
+					//echo "fecha:".date('Y-m-d');
+					//Funcion que inicializa los montos max
+					include("monto_maximo_ini.php");
+				}	
+
+			}	
 		}
-
-		-------------------------------------*/
-
+			
+				
+		//aqui estaba el incremento del serial
+		//Function for print ticket
+		include("imprimir_animalitos.php");
+		
+		
 		if (!is_null($nuevo)){
-		
+			
+			//echo "Presiono boton nuevo".$nuevo;
 			//Variable que indica si debo insertar
+			
 			$deboimprimir=0;
-	
-			//Var imprimir suma el siguiente serial de control
-			//$varimprimir = $varimprimir+1;
-			$varimprimir = $nuevoserial;
-			//$nuevoserial= $nuevoserial;
-			//echo $nuevoserial;
-			//$nuevoserial="".date(Y)."".date(m). "".date(d)."" .date(H). "".$varimprimir."";
+			
+			include("num_tickets.php");
+			
+			//----------------------------------------------$varimprimir = $nuevoserial;
+		
 			
 			
 		}
@@ -339,35 +467,56 @@
 		//funcion for delete
 		include("delete_animalitos.php");
 		
-		//echo "check es:".$check;
-		//echo "varimprimir".$varimprimir;
-		//echo "Serial es:".$nuevoserial."";
 		
+		//echo "Serial es:".$nuevoserial."";
+		//if ($_SESSION['count']==0){
+
+		//echo "varrefresh existe";
+		//echo $varrefresh;	
 		//Seleccion de loteria el sorteo
 		if(!empty($_POST['sorteo'])) {
 
-			//echo $sorteo;
+			//echo $sorteo[0];
 			foreach ($_REQUEST['sorteo'] as $select_sorteo)
 			{
 
 				if (strcmp($buscar_txt,'0')==0){
+					
+					//header ("location:/insert_animalitos.php");
+					
+					//echo "numero:".$buscar_txt;
+					
+					$buscar_txt='99';
+					//Para cada sorteo insert un animalito
 					include("insert_animalitos.php");
+					
+					
+					//cuando son varios sorteos da error colocar $buscar_txt='';
+					$buscar_txt='0';
+					
+					//$_SESSION['count']=1;
 
 				}
 				//echo "<span><b>".$select_sorteo."</b></span><br/>";
 				//Seleccion de animalito
 				//echo $buscar_txt;
 				//echo 'aqui';
-				if(!empty($buscar_txt)) {
+				if(!empty($buscar_txt) && (strcmp($buscar_txt,'99')!=0)) {
+					//echo $sorteo;
 					//foreach ($_REQUEST['animalito'] as $select_animalito)
 					//{
 						//echo "<span><b>".$buscar_txt."</b></span><br/>";
-						echo 'aquiwww';
+						//echo 'aquiwww';
+						//header ("location:/insert_animalitos.php");
+						//echo "<span>Va ha insertar, el numero:</span><br/>". $buscar_txt;
 						include("insert_animalitos.php");
+						
+						//$_SESSION['count']=1;
 					//}
 				}else { 
 					
-					echo "<span>Error, al insertar.</span><br/>";
+					echo "<span>Error, al insertar, el numero:</span><br/>". $buscar_txt;
+					
 					/*
 					<div class="codigo col-xs-12 col-sm-12 col-md-9 col-lg-9">
 					<span>swal("Por favor seleccione un Animalito.");</span>
@@ -376,7 +525,13 @@
             
 				}
 			}
-		}/*else { 
+		}
+
+	//}else{
+		//$varrefresh=1;
+		//$_SESSION['count']=1;
+
+	/*}	else { 
 			echo "<span>Por favor seleccione un <br>Sorteo.</span><br/>";
 			
 			/*<div class="codigo col-xs-12 col-sm-12 col-md-9 col-lg-9">
@@ -391,13 +546,12 @@
 					
 		}*/
 
-		//Function for print ticket
-		include("imprimir_animalitos.php");
+		
 		
 		?>
 	
 	  <div class="row">
-	    <div class="col-sm-4" style="background-color:lavender;">
+	    <div class="col-sm-2" style="background-color:lavender;">
 		<div class="form-group-sm">
 			<label for="serial-sm">Serial:</label>
 			
@@ -424,22 +578,7 @@
 				//$deboinsertar=1;
 			}*/
 			
-			/*********************
-			 * if (is_null($nuevoserial)){
-				//Estoy creando el primer serial
-				//-----------------------------------------------------
-				//Elaborando el serial	 hidden
-				//-----------------------------------------------------
-				$varimprimir=1;
-				//$nuevoserial="".date(Y)."".date(m). "".date(d)."" .date(H). "".date(mi)."" .$varimprimir."";
-				$nuevoserial="".date(Y)."".date(m). "".date(d)."" .date(H). "".$varimprimir."";
-				//echo $nuevoserial;
-			}else{
-				
-				$nuevoserial="".date(Y)."".date(m). "".date(d)."" .date(H). "".$varimprimir."";
-			}*/
 			
-			//include("num_tickets.php");
 				
 			echo "<input class=form-control id=serial name=serial value='".$nuevoserial."' type=hidden>";
 			echo "<input class=form-control id=varimprimir name=varimprimir value='".$varimprimir."' type=hidden>";	
@@ -454,7 +593,7 @@
 		</div>
 	    </div>
 	
-    <div class="col-sm-4" style="background-color:lavenderblush;">
+    <div class="col-sm-6" style="background-color:lavenderblush;">
 
 <table class="table">
     <thead>
@@ -465,33 +604,13 @@
     <tbody>
       <tr>
         <td>
-			
-			<div id="demo" style="width:269px; height:24px">
-				<div id="demoDer"  style="width: 194px; height: 24px">
-				  <div align="left">
-					<input name="buscar_txt" type="text" class="form-control" id="input_2"
-						onfocus="if(document.getElementById('lista').childNodes[0]!=null && this.value!='') { filtraLista(this.value); formateaLista(this.value); 
-							reiniciaSeleccion(); document.getElementById('lista').style.display='block'; }"
-						onblur="if(v==1) document.getElementById('lista').style.display='none';" 							
-						onkeyup="if(navegaTeclado(event)==1) {
-							clearTimeout(ultimoIdentificador); 
-							ultimoIdentificador=setTimeout('rellenaLista()', 1000); }" 
-							size="100" 
-							style="background-color: #E5E5E5;"
-							onclick="clickLista(this.value)" 
-							style="font-size: 20; "							
-							onKeyPress="return soloNumeros(event) "
-							autocomplete="off"
-							onKeyDown="return limitar(event,this.value,2)"
-
-							>
-				  </div>
-				  <div id="lista" onmouseout="v=1;" onmouseover="v=0;" style="position: absolute; left: 76px; top: 25px"></div>
-				</div>      
-				<div class="mensaje" id="error"></div>
-			  </div>
+		<div class="col-sm-6">
+		<input class="form-control" id="buscar_txt" name="buscar_txt" type="text" onKeyPress="return soloNumerostxt(event,'monto')"  onKeyDown="return limitar(event,this.value,2)">
+		</div>
+		</div>
 		<?php 
-		  //include("select_animalitos.php");onblur="if(v==1) document.getElementById('lista').style.display='none';" 
+		  //include("select_animalitos.php");onblur="if(v==1)    onKeyUp="return limitar(event,this.value,4)"    document.getElementById('lista').style.display='none';" 
+			//onBlur="return perderfocus('buscar_txt')"
 		?>
 		
 		</td>
@@ -501,24 +620,24 @@
 
 	
 	</div>
-    <div class="col-sm-4" style="background-color:lavender;">
+    <div class="col-sm-2" style="background-color:lavender;">
 
-	<label for="monto-sm">Monto:</label>
-    	<input class="form-control monto-sm" id="monto" name="monto" type="text" onKeyPress="return soloNumeros(event)" onKeyUp="return limitar(event,this.value,4)" onKeyDown="return limitar(event,this.value,4)">
+	<label>Monto:</label>
+    	<input class="form-control monto-sm" id="monto" name="monto" type="text" value="<?php echo $monto;?>" onKeyPress="return soloNumeros(event,'buscar_txt')"  onKeyDown="return limitar(event,this.value,4)">
 	
     </div>
     
   </div>
 <div class="row">
-    <div class="col-sm-4" style="background-color:lavender;">&nbsp
+    <div class="col-sm-2" style="background-color:lavender;">&nbsp
     </div>
     <div class="col-sm-4" style="background-color:lavenderblush;">&nbsp
 	</div>
-    <div class="col-sm-4" style="background-color:lavender;">&nbsp
+    <div class="col-sm-2" style="background-color:lavender;">&nbsp
     </div>
   </div>
 <div class="row">
-    <div class="col-sm-4" style="background-color:lavender;">
+    <div class="col-sm-2" style="background-color:lavender;">
 <table class="table">
     <thead>
       <tr>
@@ -528,25 +647,54 @@
     </thead>
     <tbody>
       <?php
+      
+      /*
+       * 
+       * 
+       * $nuevafecha = strtotime ('+1 day',strtotime($fecha));
+		
+		$nuevafecha = date('Y-m-d',$nuevafecha);
+       * */
 		date_default_timezone_set("America/Caracas"); 
-		$horactual = date('G');
-	//Se debe vaidar hora local del pc con la hora gmt global	
+		$horactual = date('G:i');
+		//echo $horactual; 
+		//echo "\n";
+		$hora6min = strtotime('-6 minute',strtotime($horactual));
+		$hora6 = date('H:i:s',$hora6min);
+		//echo $hora6;
+		//echo "\n";
+		
+		
+		//Los ticket que han sido impresos Flag_impresion = true y debemos pasar
+		//Flag_delete=true
+		include('flag_delete.php');
+		//Se debe vaidar hora local del pc con la hora gmt global	
 		//$horactual = date('G:i:s');
 		//$horactual=time();
 		//echo $horactual; 
-	//$strquery_hora = "SELECT Descripcion,Hora,Hora_num FROM ruleta_activa_horas where Hora<TIME(NOW())";
-	
-	
-	$strquery_hora = "SELECT Descripcion,Hora,Hora_num FROM ruleta_activa_horas where Hora>'".$horactual.":00:00'";
-	//echo $strquery_hora;
-	//select TIME(NOW()) as hora; curTime()
-	$result_hora= mysqli_query($con,$strquery_hora);
+		//$strquery_hora = "SELECT Descripcion,Hora,Hora_num FROM ruleta_activa_horas where Hora<TIME(NOW())";
+		
+		//se debe ir la jugada 6 minutos antes
+		
+		//$strquery_hora = "SELECT Descripcion,Hora,Hora_num FROM ruleta_activa_horas where Hora>'".$horactual.":00:00'";
+		
+		
+		
+		$strquery_hora = "SELECT Descripcion,Hora,Hora_num FROM ruleta_activa_horas where Hora>'".$horactual."'";
+		$seleccion = $sorteo[0];
 
-	if (!$result_hora) {
-	    $mensaje_jug  = 'Consulta no válida: ' . mysqli_error() . "\n";
-	    $mensaje_jug .= 'Consulta completa: ' . $strquery_hora;
-	    die($mensaje_jug);
-	}
+		//echo "Seleccion:".$seleccion;
+		
+		//--$strquery_hora = "SELECT Descripcion,Hora,Hora_num FROM ruleta_activa_horas ";
+		//echo $strquery_hora;
+		//select TIME(NOW()) as hora; curTime()
+		$result_hora= mysqli_query($con,$strquery_hora);
+
+		if (!$result_hora) {
+			$mensaje_jug  = 'Consulta no válida: ' . mysqli_error() . "\n";
+			$mensaje_jug .= 'Consulta completa: ' . $strquery_hora;
+			die($mensaje_jug);
+		}
 	
 		
 ?>    
@@ -554,10 +702,12 @@
         <td><div class="success">
 			
 			
-			<select id="sorteoloto" class=form-control multiple name="sorteo[]" style=" font-size:14px; font-family:Verdana, Arial, Helvetica, sans-serif;width:300px; height:160px">
+			<select id="sorteoloto" class=form-control multiple name="sorteo[]" style=" font-size:14px; font-family:Verdana, Arial, Helvetica, sans-serif;width:130px; height:340px">
 		<label>
 			
 <?php 
+
+	
 
 	while($roww = mysqli_fetch_array($result_hora)) { 
 		
@@ -567,30 +717,33 @@
 
 		$tiempo=idate("h");
 		
-		//$fecha_actual = strtotime(date("d-m-Y H:i:00",time()));
-		//$fecha_actual = strtotime(date("now"));
-		//$fecha_entrada = strtotime(date("d-m-Y ".$hora.":00:00",time()));
-		
-		//if($fecha_actual >= $fecha_actual){
-				
-		//$hora1 = strtotime($tiempo);
-		//echo $hora1;
-		//$hora2 = strtotime($hora);
-		//echo $hora2;
-		//if( $hora1 > $hora2 ) {
-			
-		//$tiempo=time();
 
-		//if ($hora>){
-			//echo "<option value=".$hora." select>".$sorteo[0]."</option>";;	
-			if ($sorteo[0] == $hora) {		
-						
-				echo "<option value=".$hora." selected='selected'>".$descripcion."</option>";
+		$descripcionsinhora = explode(" ", $descripcion);
+		
+		$concatenar = "".$hora."-".$descripcionsinhora[0]."";
+
+		//echo $concatenar;
+		// echo "\n";
+		//echo $seleccion;
+		//echo "\n";
+
+		//$concatenar="";
+
+		//if (strcasecmp($seleccion,$concatenar)==0) {		
+		if (strcmp($seleccion,$concatenar)==0) {
+		//if ($seleccion==$concatenar) {		
 			
-			}else{
-				//echo "<option value=".$hora.">".$descripcion."".$fecha_entrada."".$hora."</option>";
-				echo "<option value=".$hora.">".$descripcion."".$fecha_entrada."</option>";
-			}
+			//echo "".$hora."-".$descripcion."";
+			//echo $seleccion;
+			$concatenar="";
+			//echo $seleccion;		
+			echo "<option value=".$hora."-".$descripcion." selected='selected'>".$descripcion."</option>";
+		
+		}else{
+			//echo "<option value=".$hora.">".$descripcion."".$fecha_entrada."".$hora."</option>";
+			//echo "<option value=".$hora."-".$descripcion.">".$descripcion."".$fecha_entrada."</option>";
+			echo "<option value=".$hora."-".$descripcion.">".$descripcion."</option>";
+		}
 		//}
 		
 	}		
@@ -613,13 +766,13 @@
     </tbody>
   </table>
     </div>
-    <div class="col-sm-4" style="background-color:powderblue;">
+    <div class="col-sm-6" style="background-color:powderblue;">
 	
 
 <?php
 
-	$strquery_jug = "SELECT Num_ticket,Serial,Fecha,Animalito,Sorteo,Num_animalito,Monto FROM jugadas where (Flag_imprimir=FALSE and "
-	. "Fecha >= DATE_FORMAT(NOW(),'%Y-%m-%d 00:00:00'))";
+	$strquery_jug = "SELECT Num_ticket,Serial,Fecha,Animalito,Sorteo,Loteria,Num_animalito,Monto FROM jugadas where (Flag_imprimir=FALSE and "
+	. "Fecha >= DATE_FORMAT(NOW(),'%Y-%m-%d 00:00:00')) ORDER BY Num_ticket DESC";
 	//echo $strquery_jug;
 	$result_jug= mysqli_query($con,$strquery_jug);
 
@@ -633,7 +786,8 @@
 <table class="table">
     <thead>
       <tr>
-        <th>Sorteo</th>        
+        <th>Sorteo</th>
+        <th>Loteria</th>        
         <th>Animalito</th>
         <th>Monto</th>     
         <th>Eliminar</th>  
@@ -648,6 +802,7 @@
 		
 		$Num_ticket = $fila['Num_ticket'];
 		$sorteo_jug = $fila['Sorteo'];
+		$loteria_jug = $fila['Loteria'];
 		$monto_jug = $fila['Monto'];
 		$animalito_jug = $fila['Num_animalito'];
 		$animalitoletra = $fila['Animalito'];
@@ -662,14 +817,17 @@
 		echo "<input type=checkbox name=check[] id=check[]  value=".$Num_ticket." >";
 
 		if (($sorteo_jug==10) || ($sorteo_jug==11)){
-			echo "" .$sorteo_jug. " AM";
+			echo "" .$sorteo_jug. " ";
 		}else{
-			echo "" .$sorteo_jug. " PM";
+			echo "" .$sorteo_jug. " ";
 		}	
 		echo "</td>";
 		echo "<td>";
-		echo "" .$animalitoletra. "";
+		echo "" .$loteria_jug. "";
 		echo "</td>";
+		echo "<td>";
+		echo "" .$animalito_jug. " " .$animalitoletra."";
+		echo "</td>";		
 		echo "<td>";
 		echo "" .$monto_jug. "";
 		echo "</td>";	
@@ -700,57 +858,133 @@
   </table>
 
     </div>
-    <div class="col-sm-4" style="background-color:lavender;">
+    <div class="col-sm-2" style="background-color:lavender;">
 		
 	<input type="HIDDEN" value="<?php echo $sorteo_jug;?>" name="sorteo_jug">
+	<input type="HIDDEN" value="<?php echo $loteria_jug;?>" name="loteria_jug">
 	<input type="HIDDEN" value="<?php echo $monto_jug;?>" name="monto_jug">
-	<input type="HIDDEN" value="<?php echo $total;?>" name="total">
+	<h4>
+
+	Total: <input type="Text" size="10" value="<?php echo $total;?>" name="total" readonly="readonly">
+	<h4>
 	<input type="HIDDEN" value="<?php echo $animalito_jug;?>" name="animalito_jug">
 	<input type="HIDDEN" value="<?php echo $animalitoletra;?>" name="animalitoletra">
 	<input type="HIDDEN" value="<?php echo $nuevoserial;?>" name="nuevoserial">
+	<input type="HIDDEN" value="<?php echo $nuevoticket;?>" name="nuevoticket">
 	<input type="HIDDEN" value="<?php echo $varimprimir;?>" name="varimprimir">
 	
-	<!--<input type="submit"  class="btn btn-info" value="Agregar" name="insert">-->
-	<button type="button" class="msg-basico-txt btn btn-info" value="Agregar" id=insert name="insert">Agregar</button>
+	<!--<input type="submit"  class="btn btn-info" value="Agregar" name="insert" onKeyPress="return soloNumerostxt(event,'buscar_txt')">-->
+	<button type="submit" class="msg-basico-txt btn btn-info" value="Agregar" id="insert" name="insert">Agregar</button>
 	
 	</form>
-	<form  action="#" method="post">
+	
+	<p></p>
+	
+    <form name="formimprimirdirecto" action="#" method="post">
 		<input type="HIDDEN" value="<?php echo $sorteo_jug;?>" name="sorteo_jug">
+		<input type="HIDDEN" value="<?php echo $loteria_jug;?>" name="loteria_jug">
 		<input type="HIDDEN" value="<?php echo $monto_jug;?>" name="monto_jug">
 		<input type="HIDDEN" value="<?php echo $total;?>" name="total">
 		<input type="HIDDEN" value="<?php echo $animalito_jug;?>" name="animalito_jug">
 		<input type="HIDDEN" value="<?php echo $animalitoletra;?>" name="animalitoletra">
 		<input type="HIDDEN" value="<?php echo $nuevoserial;?>" name="nuevoserial">
-		<input type="HIDDEN" value="<?php echo $varimprimir;?>" name="varimprimir">
-		<input type="submit"  class="btn btn-info" value="Nuevo_Ticket"  name="nuevo">                       
-    </form>
-    <form action="rpt_ticket.php" method="post">
-		<input type="HIDDEN" value="<?php echo $sorteo_jug;?>" name="sorteo_jug">
-		<input type="HIDDEN" value="<?php echo $monto_jug;?>" name="monto_jug">
-		<input type="HIDDEN" value="<?php echo $total;?>" name="total">
-		<input type="HIDDEN" value="<?php echo $animalito_jug;?>" name="animalito_jug">
-		<input type="HIDDEN" value="<?php echo $animalitoletra;?>" name="animalitoletra">
-		<input type="HIDDEN" value="<?php echo $nuevoserial;?>" name="nuevoserial">
-		<input type="HIDDEN" value="<?php echo $varimprimir;?>" name="varimprimir">
+		<input type="HIDDEN" value="<?php echo $nuevoticket;?>" name="nuevoticket">
+		<input type="HIDDEN" value="<?php echo $varimprimir;?>" name="varimprimir">		
 		<input type="HIDDEN" value="rpt_ticket" name="reporte"> 					 
-		<input type="submit"  class="btn btn-info" value="Imprimir">                       
+		<input type="submit"  class="btn btn-info" value="Imprimir"  name ="imprimirdirecto">                       
+    </form>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+	<form  name="newticket" action="#" method="post">
+		<input type="HIDDEN" value="<?php echo $sorteo_jug;?>" name="sorteo_jug">
+		<input type="HIDDEN" value="<?php echo $loteria_jug;?>" name="loteria_jug">
+		<input type="HIDDEN" value="<?php echo $monto_jug;?>" name="monto_jug">
+		<input type="HIDDEN" value="<?php echo $total;?>" name="total">
+		<input type="HIDDEN" value="<?php echo $animalito_jug;?>" name="animalito_jug">
+		<input type="HIDDEN" value="<?php echo $animalitoletra;?>" name="animalitoletra">
+		<input type="HIDDEN" value="<?php echo $nuevoserial;?>" name="nuevoserial">
+		<input type="HIDDEN" value="<?php echo $nuevoticket;?>" name="nuevoticket">
+		<input type="HIDDEN" value="<?php echo $varimprimir;?>" name="varimprimir">		
+		<input type="submit"  class="btn btn-info" value="Nuevo_Ticket"  name="nuevo">                       
     </form>	
+    
+    <form name="formimprimir" action="rpt_ticket.php" method="post">
+		<input type="HIDDEN" value="<?php echo $sorteo_jug;?>" name="sorteo_jug">
+		<input type="HIDDEN" value="<?php echo $monto_jug;?>" name="monto_jug">
+		<input type="HIDDEN" value="<?php echo $total;?>" name="total">
+		<input type="HIDDEN" value="<?php echo $animalito_jug;?>" name="animalito_jug">
+		<input type="HIDDEN" value="<?php echo $animalitoletra;?>" name="animalitoletra">
+		<input type="HIDDEN" value="<?php echo $nuevoserial;?>" name="nuevoserial">
+		<input type="HIDDEN" value="<?php echo $nuevoticket;?>" name="nuevoticket">
+		<input type="HIDDEN" value="<?php echo $varimprimir;?>" name="varimprimir">		
+		<input type="HIDDEN" value="rpt_ticket" name="reporte"> 					 
+		<input type="submit"  class="btn btn-info" value="PDF" onclick="document.formimprimir.target='_blank'">  <!-- _self _blank -->                     
+    </form>
+    <p></p>
+    	
 	<form action="ganadores.php" method="post">
 		<input type="HIDDEN" value="<?php echo $sorteo_jug;?>" name="sorteo_jug">
+		<input type="HIDDEN" value="<?php echo $loteria_jug;?>" name="loteria_jug">
 		<input type="HIDDEN" value="<?php echo $monto_jug;?>" name="monto_jug">
 		<input type="HIDDEN" value="<?php echo $total;?>" name="total">
 		<input type="HIDDEN" value="<?php echo $animalito_jug;?>" name="animalito_jug">
 		<input type="HIDDEN" value="<?php echo $animalitoletra;?>" name="animalitoletra">
 		<input type="HIDDEN" value="<?php echo $nuevoserial;?>" name="nuevoserial">
-		<input type="HIDDEN" value="<?php echo $varimprimir;?>" name="varimprimir">
+		<input type="HIDDEN" value="<?php echo $nuevoticket;?>" name="nuevoticket">
+		<input type="HIDDEN" value="<?php echo $varimprimir;?>" name="varimprimir">		
 		<input type="HIDDEN" value="rpt_ticket" name="reporte">
-		<input type="submit"  class="btn btn-info" value="Ganadores">                       
+		<input type="submit"  class="btn btn-info" value="Ticket Ganadores">                       
+    </form>
+    
+    <form action="cargaranimalitos.php" method="post">
+		<input type="HIDDEN" value="<?php echo $sorteo_jug;?>" name="sorteo_jug">
+		<input type="HIDDEN" value="<?php echo $loteria_jug;?>" name="loteria_jug">
+		<input type="HIDDEN" value="<?php echo $monto_jug;?>" name="monto_jug">
+		<input type="HIDDEN" value="<?php echo $total;?>" name="total">
+		<input type="HIDDEN" value="<?php echo $animalito_jug;?>" name="animalito_jug">
+		<input type="HIDDEN" value="<?php echo $animalitoletra;?>" name="animalitoletra">
+		<input type="HIDDEN" value="<?php echo $nuevoserial;?>" name="nuevoserial">
+		<input type="HIDDEN" value="<?php echo $nuevoticket;?>" name="nuevoticket">
+		<input type="HIDDEN" value="<?php echo $varimprimir;?>" name="varimprimir">		
+		<input type="HIDDEN" value="rpt_ticket" name="reporte">
+		<input type="submit"  class="btn btn-info" value="Cargar Animalitos">                       
+    </form>
+    <p></p>
+    <form action="liberarticket.php" method="post">
+		<input type="HIDDEN" value="<?php echo $sorteo_jug;?>" name="sorteo_jug">
+		<input type="HIDDEN" value="<?php echo $loteria_jug;?>" name="loteria_jug">
+		<input type="HIDDEN" value="<?php echo $monto_jug;?>" name="monto_jug">
+		<input type="HIDDEN" value="<?php echo $total;?>" name="total">
+		<input type="HIDDEN" value="<?php echo $animalito_jug;?>" name="animalito_jug">
+		<input type="HIDDEN" value="<?php echo $animalitoletra;?>" name="animalitoletra">
+		<input type="HIDDEN" value="<?php echo $nuevoserial;?>" name="nuevoserial">
+		<input type="HIDDEN" value="<?php echo $nuevoticket;?>" name="nuevoticket">
+		<input type="HIDDEN" value="<?php echo $varimprimir;?>" name="varimprimir">		
+		<input type="HIDDEN" value="rpt_ticket" name="reporte">
+		<input type="submit"  class="btn btn-info" value="Anular Ticket">                       
+    </form>
+    
+    <form action="pagarticket.php" method="post">
+		<input type="HIDDEN" value="<?php echo $sorteo_jug;?>" name="sorteo_jug">
+		<input type="HIDDEN" value="<?php echo $loteria_jug;?>" name="loteria_jug">
+		<input type="HIDDEN" value="<?php echo $monto_jug;?>" name="monto_jug">
+		<input type="HIDDEN" value="<?php echo $total;?>" name="total">
+		<input type="HIDDEN" value="<?php echo $animalito_jug;?>" name="animalito_jug">
+		<input type="HIDDEN" value="<?php echo $animalitoletra;?>" name="animalitoletra">
+		<input type="HIDDEN" value="<?php echo $nuevoserial;?>" name="nuevoserial">
+		<input type="HIDDEN" value="<?php echo $nuevoticket;?>" name="nuevoticket">
+		<input type="HIDDEN" value="<?php echo $varimprimir;?>" name="varimprimir">		
+		<input type="HIDDEN" value="rpt_ticket" name="reporte">
+		<input type="submit"  class="btn btn-info" value="Pagar Ticket Ganador">                       
     </form>
 	</div>
   </div>
 <div class="row">
-    <div class="col-sm-4" style="background-color:lavender;">
+    <div class="col-sm-6" style="background-color:lavender;">
 	<?php
+		//rpt_ticket
 		echo 'Fecha: ';
 		echo date('d-m-Y g:i:s');
 	?>
@@ -759,6 +993,10 @@
     </div>
   </div>
 </div>	
-		<img src="images/animalitos.jpg" alt="ruleta" style="width:500px;height:528px;">
+	<script>
+	window.onload = function() {
+	document.getElementById("buscar_txt").focus();
+	};
+	</script>
 	</body>
 </html>

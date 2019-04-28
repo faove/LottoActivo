@@ -28,10 +28,10 @@ jQuery(".msg-basico-txt").click(function() {
     }
     var x = document.forms["myForm"]["monto"].value;
     if (x == "") {
-    	swal("Suministre el monto");
+    	//swal("Suministre el monto");
 		//alert("Suministre un numero Valido aqui");
 		return false;
-    }
+    } 
 
     
     document.forms["myForm"].submit();

@@ -8,14 +8,16 @@
 
 /*procedimiento de la conexion*/
 	//echo 'hello';
-	$username="root";
+	$username="npino1_falvarez";
+	//$username="root";
 	
-    	$password="xts74";
+    	$password="12f666a019";
+	//$password="xts74";
 
-    	$dbName="falvarez_lotto";
+    	$dbName="npino1_lotto";
 
     	//String dbHost="www.dissoft.info";
-	//$dbHost="mysql1000.mochahost.com";
+	//$dbHost="mysql1004.mochahost.com";
 	$dbHost="localhost";
 
  	//$url ="jdbc:mysql://"+$dbHost+":3306/"+$dbName;
@@ -24,9 +26,11 @@
 	$con =  mysqli_connect($dbHost, $username, $password,$dbName);
 	
 	if (!$con) {
-    	die('No pudo conectarse: ' . mysql_error());
+
+    		die('No pudo conectarse: ' . mysql_error());
     	
-	}
+	} //else
+		//echo "todo";
 	//Comente el if anterior verificar
 	
 	//echo 'Conectado satisfactoriamente';
