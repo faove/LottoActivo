@@ -12,11 +12,13 @@
 		
 		<meta name="author" content="falvarez" />
 		
+
 		<link rel="shortcut icon" href="images/if_roulette_icons_73218.ico">
 		
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
 		<script src="js/bootstrap.min.js"></script>
+
 		
 		<!--<script src="js/functions.js"></script>-->
 		
